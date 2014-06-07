@@ -1,5 +1,5 @@
 ###################################################################
-#### Exploratory Data Analysis - Coursera - Project 1 - Plot 1 ####
+#### Exploratory Data Analysis - Coursera - Project 1 - Plot 2 ####
 ###################################################################
 
 ## Check if there is a raw data file and download it if necessary
@@ -31,12 +31,18 @@ elepc <- read.table("filtered.txt", header = TRUE, colClasses = "character", sep
 ## Reverting Global_active_power to numeric
 gap <- as.numeric(elepc$Global_active_power)
 
+## Formating date and time
+dat <- strptime(paste(elepc$Date, elepc$Time), format="%d/%m/%Y %H:%M:%S")
+
+## Setting the locale to ENG
+Sys.setlocale("LC_TIME", "C")
+
 ## Plotting - No need to specify dimensions as 480x480px is default; 
 ## Intentionally left background color white (also default) for legibility
 ## For my eyes 'antialias = "cleartype"' renders the font slightly better on PC
 print("Graph building, please wait...")
-png("plot1.png", antialias = "cleartype")
-hist(gap, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
+png("plot2.png", antialias = "cleartype")
+with(elepc, plot(dat, gap, type="l", xlab = "", ylab = "Global Active Power (kilowatts)"))
 
 ## Closing the device
 dev.off()
